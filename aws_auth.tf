@@ -1,5 +1,6 @@
 resource "kubernetes_config_map" "aws_auth" {
   count = "${var.manage_aws_auth ? 1 : 0}"
+  depends_on = ["aws_eks_cluster.this"]
 
   "metadata" {
     name      = "aws-auth"
@@ -7,7 +8,7 @@ resource "kubernetes_config_map" "aws_auth" {
   }
 
   data {
-    mapRoles    = "${format("%s%s", join("", data.template_file.map_roles.*.rendered), data.template_file.launch_template_worker_role_arns.rendered)}"
+    mapRoles    = "${format("%s%s", join("", data.template_file.map_roles.*.rendered), join("", distinct(concat(data.template_file.launch_template_worker_role_arns.*.rendered, data.template_file.worker_role_arns.*.rendered))))}"
     mapAccounts = "${join("", data.template_file.map_accounts.*.rendered)}"
     mapUsers    = "${join("", data.template_file.map_users.*.rendered)}"
   }
