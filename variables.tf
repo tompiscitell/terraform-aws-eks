@@ -238,6 +238,11 @@ variable "worker_create_security_group" {
   default     = true
 }
 
+variable "worker_allow_internet_egress" {
+  description = "Whether the worker security group should have unrestricted access to the internet. If `false` workers will have egress to the VPC only."
+  default     = true
+}
+
 variable "permissions_boundary" {
   description = "If provided, all IAM roles will be created with this permissions boundary attached."
   default     = ""
