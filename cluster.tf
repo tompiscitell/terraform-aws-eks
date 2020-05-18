@@ -20,6 +20,8 @@ resource "aws_eks_cluster" "this" {
     "aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy",
     "aws_iam_role_policy_attachment.cluster_AmazonEKSServicePolicy",
   ]
+
+  tags = "${var.tags}"
 }
 
 resource "aws_security_group" "cluster" {
