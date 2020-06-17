@@ -44,6 +44,11 @@ output "cluster_iam_role_arn" {
   value       = "${aws_iam_role.cluster.arn}"
 }
 
+output "cluster_oidc_issuer" {
+  description = "URL of OIDC Issuer for cluster (for use w. IRSA)"
+  value       = "${aws_eks_cluster.this.identity.0.oidc.0.issuer}"
+}
+
 output "kubeconfig" {
   description = "kubectl config file contents for this EKS cluster."
   value       = "${data.template_file.kubeconfig.rendered}"
